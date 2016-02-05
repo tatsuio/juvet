@@ -6,7 +6,7 @@ module Juvet
     end
 
     def initialize!(attributes)
-      attributes.each { |name, value| define_variable! name, value }
+      attributes.each { |name, value| set_variable! name, value }
     end
 
     def attribute!(attributes)
@@ -27,17 +27,20 @@ module Juvet
     def define_getter!(name)
       create_method name do
         instance_variable_get("@#{name}")
-      end
+      end unless respond_to? name
     end
 
     def define_setter!(name)
-      create_method "#{name}=" do |value|
+      method = "#{name}="
+      create_method method do |value|
         instance_variable_set("@#{name}", value)
-      end
+      end unless respond_to? method
     end
 
-    def define_variable!(name, value)
-      instance_variable_set("@#{name}", value)
+    def set_variable!(name, value)
+      variable = "@#{name}"
+      instance_variable_set("@#{name}", value) \
+        unless instance_variable_defined? variable
     end
   end
 end

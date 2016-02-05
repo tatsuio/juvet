@@ -1,5 +1,7 @@
 module Juvet
   class Bot
+    include Attributable
+
     attr_reader :id
 
     class << self
@@ -12,6 +14,7 @@ module Juvet
 
     def initialize(id, attributes={})
       @id = id
+      super attributes
     end
   end
 end

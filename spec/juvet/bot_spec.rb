@@ -12,5 +12,16 @@ describe Juvet::Bot do
     it "assigns the id" do
       expect(subject.id).to eq "T12345"
     end
+
+    it "defines getters for the attributes" do
+      expect(subject.bot_access_token).to eq "xoxb-blah"
+      expect(subject.name).to eq "blah"
+    end
+
+    it "defines setters for the attributes" do
+      subject.bot_access_token = "xoxb-bleh"
+
+      expect(subject.bot_access_token).to eq "xoxb-bleh"
+    end
   end
 end

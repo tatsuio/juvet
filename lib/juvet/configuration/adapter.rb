@@ -12,7 +12,7 @@ module Juvet
         @type = opts.delete :type
         @uri = opts.delete :uri
         @options = opts
-        @class_name = "#{type}_adapter".split('_').map!{ |w| w.capitalize }.join
+        @class_name = Juvet::String.new("#{type}_adapter").classify
       end
 
       def build

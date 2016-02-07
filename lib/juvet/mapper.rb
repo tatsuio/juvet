@@ -11,7 +11,7 @@ module Juvet
     end
 
     def collection(name, &block)
-      collections[name] = Juvet::Mapper::Collection.new &block
+      collections[name] = Juvet::Mapper::Collection.new name, &block
     end
   end
 end

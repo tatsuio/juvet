@@ -2,6 +2,7 @@ require_relative "juvet/attributable"
 require_relative "juvet/bot"
 require_relative "juvet/configuration"
 require_relative "juvet/repository"
+require_relative "juvet/string"
 
 module Juvet
   def self.configuration

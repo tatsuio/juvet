@@ -1,3 +1,5 @@
+require_relative "mapper/collection"
+
 module Juvet
   class Mapper
     attr_reader :collections
@@ -9,7 +11,7 @@ module Juvet
     end
 
     def collection(name, &block)
-      collections[name] = nil
+      collections[name] = Juvet::Mapper::Collection.new &block
     end
   end
 end

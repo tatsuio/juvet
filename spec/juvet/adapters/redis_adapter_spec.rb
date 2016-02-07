@@ -43,6 +43,25 @@ describe Juvet::Adapters::RedisAdapter do
     end
   end
 
+  describe "#persist" do
+    it "creates the entity if it's new" do
+      entity = Entity.new id: 531
+      result = subject.persist entity
+
+      expect(result).to eq entity
+      expect(@redis.get("entity:531")).to eq(JSON.generate({ blah: nil }))
+    end
+
+    it "updates the entity if it exists" do
+      created = subject.create entity
+      created.blah = "bleh"
+      result = subject.persist created
+
+      expect(result).to eq entity
+      expect(@redis.get("entity:123")).to eq(JSON.generate({ blah: "bleh" }))
+    end
+  end
+
   describe "#update" do
     it "updates the entity in the redis store" do
       created = subject.create entity

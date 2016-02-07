@@ -12,8 +12,7 @@ module Juvet
       end
 
       def create(entity)
-        redis.set key(entity), entity.attributes.to_json
-        entity
+        update_attributes entity
       end
 
       def find(id)
@@ -23,10 +22,13 @@ module Juvet
         Object.const_get(class_name).new ({ id: id }).merge(JSON.load(attributes))
       end
 
+      def persist(entity)
+        find(entity.id).nil? ? create(entity) : update_attributes(entity)
+      end
+
       def update(entity)
         raise EntityNotFoundError if find(entity.id).nil?
-        redis.set key(entity), entity.attributes.to_json
-        entity
+        update_attributes entity
       end
 
       private
@@ -37,6 +39,11 @@ module Juvet
 
       def key(entity)
         class_key entity.class.name, entity.id
+      end
+
+      def update_attributes(entity)
+        redis.set key(entity), entity.attributes.to_json
+        entity
       end
     end
   end

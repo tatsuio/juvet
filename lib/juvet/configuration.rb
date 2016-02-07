@@ -1,4 +1,5 @@
 require_relative "configuration/adapter"
+require_relative "configuration/mapping"
 
 module Juvet
   class Configuration
@@ -6,6 +7,10 @@ module Juvet
 
     def adapter=(options)
       @adapter ||= Juvet::Configuration::Adapter.new(options)
+    end
+
+    def mapping(&block)
+      @mapping ||= Juvet::Configuration::Mapping.new(&block)
     end
   end
 end

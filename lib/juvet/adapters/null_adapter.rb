@@ -1,6 +1,9 @@
 module Juvet
   module Adapters
     class NullAdapter
+      def initialize(uri=nil, options={})
+      end
+
       def create(entity)
         entity
       end

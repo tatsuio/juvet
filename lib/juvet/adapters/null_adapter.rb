@@ -1,11 +1,14 @@
 module Juvet
   module Adapters
     class NullAdapter
-      def initialize(uri=nil, options={})
+      def initialize(collection=nil, options={})
       end
 
       def create(entity)
         entity
+      end
+
+      def find(id)
       end
 
       def persist(entity)

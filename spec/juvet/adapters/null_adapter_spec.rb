@@ -8,6 +8,12 @@ describe Juvet::Adapters::NullAdapter do
     end
   end
 
+  describe "#find" do
+    it "returns nil" do
+      expect(subject.find("blah")).to be_nil
+    end
+  end
+
   describe "#persist" do
     it "simply returns the entity" do
       expect(subject.persist(entity)).to eq entity

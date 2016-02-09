@@ -28,10 +28,11 @@ describe Juvet::Configuration::Adapter do
   end
 
   describe "#build" do
+    let(:mapper) { double(:mapper, collection_for_repository: nil) }
     subject { described_class.new type: :null }
 
     it "creates an instance of the adapter" do
-      adapter = subject.build
+      adapter = subject.build mapper
 
       expect(adapter).to be_instance_of Juvet::Adapters::NullAdapter
     end
@@ -39,7 +40,7 @@ describe Juvet::Configuration::Adapter do
     it "returns a load error if the adapter type cannot be loaded" do
       subject = described_class.new type: :blah
 
-      expect { subject.build }.to raise_error LoadError
+      expect { subject.build(mapper) }.to raise_error LoadError
     end
   end
 end

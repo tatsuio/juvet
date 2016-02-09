@@ -4,20 +4,18 @@ module Juvet
       attr_reader :class_name
       attr_reader :options
       attr_reader :type
-      attr_reader :uri
 
       def initialize(options={})
         opts = (options || {}).dup
 
         @type = opts.delete :type
-        @uri = opts.delete :uri
         @options = opts
         @class_name = Juvet::String.new("#{type}_adapter").classify
       end
 
-      def build
+      def build(mapper)
         load_adapter
-        instantiate_adapter
+        instantiate_adapter mapper
       end
 
       private
@@ -28,9 +26,9 @@ module Juvet
         raise LoadError.new("Cannot find Juvet adapter '#{type}' (#{e.message})")
       end
 
-      def instantiate_adapter
+      def instantiate_adapter(mapper)
         klass = Juvet::Adapters.const_get(class_name)
-        klass.new(uri, options)
+        klass.new(mapper.collection_for_repository(klass), options)
       end
     end
   end

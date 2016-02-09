@@ -4,11 +4,11 @@ require "redis"
 module Juvet
   module Adapters
     class RedisAdapter
-      attr_reader :redis
+      attr_reader :collection, :redis
 
-      def initialize(uri, options={})
-        opts = { url: uri }.merge options
-        @redis = Redis.new opts
+      def initialize(collection, options={})
+        @collection = collection
+        @redis = Redis.new options
       end
 
       def create(entity)
@@ -16,10 +16,9 @@ module Juvet
       end
 
       def find(id)
-        class_name = "Entity"
-        attributes = redis.get(class_key(class_name, id))
+        attributes = redis.get(collection_key(id))
         return nil if attributes.nil?
-        Object.const_get(class_name).new ({ id: id }).merge(JSON.load(attributes))
+        collection.entity.new ({ id: id }).merge(JSON.load(attributes))
       end
 
       def persist(entity)
@@ -33,12 +32,12 @@ module Juvet
 
       private
 
-      def class_key(class_name, id)
-        "#{Juvet::String.new(class_name).underscore}:#{id}"
+      def collection_key(id)
+        "#{Juvet::String.new(collection.name).underscore}:#{id}"
       end
 
       def key(entity)
-        class_key entity.class.name, entity.id
+        collection_key entity.id
       end
 
       def update_attributes(entity)

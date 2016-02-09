@@ -13,8 +13,10 @@ describe Juvet::Adapters::RedisAdapter do
     end
   end
 
+  let(:collection) { double(:collection, name: :entities, entity: Entity) }
   let(:entity) { Entity.new id: 123 }
-  subject { described_class.new "redis://localhost:6379", db: 15 }
+  let(:url) { "redis://localhost:6379" }
+  subject { described_class.new collection, url: url, db: 15 }
 
   before(:all) { @redis = Redis.new db: 15 }
   after(:all) { @redis.flushdb }
@@ -24,7 +26,7 @@ describe Juvet::Adapters::RedisAdapter do
       result = subject.create entity
 
       expect(result).to eq entity
-      expect(@redis.get("entity:123")).to eq(JSON.generate({ blah: nil }))
+      expect(@redis.get("entities:123")).to eq(JSON.generate({ blah: nil }))
     end
   end
 
@@ -49,7 +51,7 @@ describe Juvet::Adapters::RedisAdapter do
       result = subject.persist entity
 
       expect(result).to eq entity
-      expect(@redis.get("entity:531")).to eq(JSON.generate({ blah: nil }))
+      expect(@redis.get("entities:531")).to eq(JSON.generate({ blah: nil }))
     end
 
     it "updates the entity if it exists" do
@@ -58,7 +60,7 @@ describe Juvet::Adapters::RedisAdapter do
       result = subject.persist created
 
       expect(result).to eq entity
-      expect(@redis.get("entity:123")).to eq(JSON.generate({ blah: "bleh" }))
+      expect(@redis.get("entities:123")).to eq(JSON.generate({ blah: "bleh" }))
     end
   end
 
@@ -69,7 +71,7 @@ describe Juvet::Adapters::RedisAdapter do
       result = subject.update created
 
       expect(result).to eq entity
-      expect(@redis.get("entity:123")).to eq(JSON.generate({ blah: "bleh" }))
+      expect(@redis.get("entities:123")).to eq(JSON.generate({ blah: "bleh" }))
     end
 
     it "throws an exception if the entity is not already stored" do

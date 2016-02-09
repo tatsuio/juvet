@@ -12,5 +12,8 @@ module Juvet
     def mapping(&block)
       @mapping ||= Juvet::Configuration::Mapping.new(&block)
     end
+
+    def load!
+    end
   end
 end

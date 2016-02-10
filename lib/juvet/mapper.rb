@@ -13,5 +13,9 @@ module Juvet
     def collection(name, &block)
       collections[name] = Juvet::Mapper::Collection.new name, &block
     end
+
+    def collection_for_repository(klass)
+      collections.values.find { |collection| collection.repository == klass }
+    end
   end
 end

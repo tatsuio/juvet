@@ -20,4 +20,28 @@ describe Juvet::Mapper do
         be_instance_of Juvet::Mapper::Collection
     end
   end
+
+  describe "#collection_for_repository" do
+    class WidgetRepository; end
+    let(:subject) do
+      described_class.new do
+        collection :widgets do
+          repository WidgetRepository
+        end
+      end
+    end
+
+    it "returns the collection for the first one that specifies the repository" do
+      result = subject.collection_for_repository WidgetRepository
+
+      expect(result.name).to eq :widgets
+      expect(result.repository).to eq WidgetRepository
+    end
+
+    it "returns nil if the repository is not found" do
+      result = subject.collection_for_repository Object
+
+      expect(result).to be_nil
+    end
+  end
 end

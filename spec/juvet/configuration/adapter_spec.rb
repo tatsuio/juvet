@@ -6,13 +6,6 @@ describe Juvet::Configuration::Adapter do
     end
   end
 
-  describe "#uri" do
-    it "sets the uri from the options" do
-      subject = described_class.new uri: "http://localhost:3000"
-      expect(subject.uri).to eq "http://localhost:3000"
-    end
-  end
-
   describe "#options" do
     it "includes any additional options initialized" do
       subject = described_class.new type: :nil, blah: :bleh

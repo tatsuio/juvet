@@ -10,8 +10,7 @@ module Juvet
       end
 
       def create!(id, attributes={})
-        bot = create id, attributes
-        BotRepository.create bot
+        BotRepository.create create(id, attributes)
       end
     end
 

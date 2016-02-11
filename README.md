@@ -35,7 +35,9 @@ Juvet::Bot.create! bot_access_token, team_id: "T12345", status: :active
 * Updating a bot
 
 ```
-Juvet::Bot.update! bot_access_token, status: :inactive
+bot = Juvet::Bot.find bot_access_token
+bot.status = :inactive
+bot.update!
 ```
 
 * Destroying a bot

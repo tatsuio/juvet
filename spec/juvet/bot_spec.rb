@@ -24,4 +24,11 @@ describe Juvet::Bot do
       expect(subject.bot_access_token).to eq "xoxb-bleh"
     end
   end
+
+  describe ".create!" do
+    it "stores the created instance in the repository" do
+      expect(Juvet::BotRepository).to receive(:create).with (Juvet::Bot)
+      described_class.create! "blah", name: "blah"
+    end
+  end
 end

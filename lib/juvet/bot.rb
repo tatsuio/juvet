@@ -8,6 +8,11 @@ module Juvet
       def create(id, attributes={})
         new id, attributes
       end
+
+      def create!(id, attributes={})
+        bot = create id, attributes
+        BotRepository.create bot
+      end
     end
 
     private

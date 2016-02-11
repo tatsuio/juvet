@@ -27,7 +27,7 @@ describe Juvet::Bot do
 
   describe ".create!" do
     it "stores the created instance in the repository" do
-      expect(Juvet::BotRepository).to receive(:create).with (Juvet::Bot)
+      expect(Juvet::BotRepository).to receive(:create).with Juvet::Bot
       described_class.create! "blah", name: "blah"
     end
   end
@@ -36,14 +36,26 @@ describe Juvet::Bot do
     let!(:bot) { described_class.create! "xoxb-blah", team_id: "Blah" }
 
     it "removes the instance from the repository" do
-      expect(Juvet::BotRepository).to receive(:destroy).with ("xoxb-blah")
+      expect(Juvet::BotRepository).to receive(:destroy).with "xoxb-blah"
       described_class.destroy! bot.id
     end
   end
 
   describe ".find" do
+    let!(:bot) { described_class.create! "xoxb-blah", team_id: "Blah" }
+
+    it "creates an instance from the repository" do
+      expect(Juvet::BotRepository).to receive(:find).with "xoxb-blah"
+      described_class.find! bot.id
+    end
   end
 
-  describe "#update" do
+  describe "#update!" do
+    let!(:bot) { described_class.create! "xoxb-blah", team_id: "Blah" }
+
+    it "updates the instance in the repository" do
+      expect(Juvet::BotRepository).to receive(:update).with bot
+      bot.update! team_id: "Bleh"
+    end
   end
 end

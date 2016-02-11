@@ -16,6 +16,14 @@ module Juvet
       def destroy!(id)
         BotRepository.destroy id
       end
+
+      def find!(id)
+        BotRepository.find id
+      end
+    end
+
+    def update!(attributes={})
+      BotRepository.update self
     end
 
     private

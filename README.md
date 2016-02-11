@@ -52,3 +52,10 @@ Juvet::Bot.destroy! bot_access_token
 1. Commit your changes (small commits please)
 1. Push your new branch `git push origin my-awesome-feature`
 1. Create a pull request `hub pull-request -b tatsuio:master -h tatsuio:my-awesome-feature`
+
+## RELEASING A NEW GEM
+
+1. Bump the VERSION in `lib/juvet/version.rb`
+1. run `bundle exec rake build`
+1. Commit changes and push to GitHub
+1. run `bundle exec rake release`

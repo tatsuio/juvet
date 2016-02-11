@@ -8,6 +8,9 @@ module Juvet
         entity
       end
 
+      def destroy(id)
+      end
+
       def find(id)
       end
 

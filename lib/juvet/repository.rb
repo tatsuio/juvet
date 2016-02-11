@@ -23,6 +23,10 @@ module Juvet
         adapter.create entity
       end
 
+      def destroy(id)
+        adapter.destroy id
+      end
+
       def find(id)
         adapter.find id
       end

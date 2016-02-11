@@ -15,6 +15,14 @@ describe Juvet::Repository do
     end
   end
 
+  describe ".destroy" do
+    it "passes the destroying to the adapter" do
+      id = "123"
+      expect(Repository.adapter).to receive(:destroy).with id
+      Repository.destroy id
+    end
+  end
+
   describe ".find" do
     it "passes the finding to the adapter" do
       id = "123"

@@ -7,6 +7,7 @@ describe Juvet do
 
   describe ".configure" do
     it "yields configuration" do
+      allow(described_class.configuration).to receive(:load!)
       expect { |b| described_class.configure &b }.to \
         yield_with_args Juvet::Configuration
     end

@@ -59,3 +59,9 @@ Juvet::Bot.destroy! bot_access_token
 1. run `bundle exec rake build`
 1. Commit changes and push to GitHub
 1. run `bundle exec rake release`
+
+## LICENSE
+
+Copyright (c) 2016, [Tatsu, LLC](http://tatsu.io).
+
+This project is licensed under the [MIT License](LICENSE.md).

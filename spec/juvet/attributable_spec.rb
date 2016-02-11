@@ -3,6 +3,14 @@ describe Juvet::Attributable do
     include Juvet::Attributable
   end
 
+  describe "#attributes" do
+    subject { Ava.new name: "Ava", model: 5.9 }
+
+    it "returns a hash of the objects public getters and their values" do
+      expect(subject.attributes).to eq({ name: "Ava", model: 5.9 })
+    end
+  end
+
   describe "#initialize" do
     it "has a default initializer to accept attributes" do
       expect { Ava.new name: "Ava" }.to_not raise_error

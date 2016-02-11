@@ -10,7 +10,18 @@ module Juvet
     end
 
     def attribute!(attributes)
+      (@_attributes ||= []).concat attributes.keys
       attributes.keys.each { |name| define_attribute! name }
+    end
+
+    def attributes
+      attributes = {}
+      @_attributes.each do |attribute|
+        if self.respond_to? attribute
+          attributes[attribute] = self.send(attribute)
+        end
+      end
+      attributes
     end
 
     private

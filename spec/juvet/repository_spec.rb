@@ -15,6 +15,14 @@ describe Juvet::Repository do
     end
   end
 
+  describe ".find" do
+    it "passes the finding to the adapter" do
+      id = "123"
+      expect(Repository.adapter).to receive(:find).with id
+      Repository.find id
+    end
+  end
+
   describe ".persist" do
     it "passes persitance to the adapter" do
       object = Object.new

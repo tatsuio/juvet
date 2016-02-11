@@ -23,6 +23,10 @@ module Juvet
         adapter.create entity
       end
 
+      def find(id)
+        adapter.find id
+      end
+
       def persist(entity)
         adapter.persist entity
       end

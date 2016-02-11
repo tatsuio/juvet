@@ -12,6 +12,10 @@ module Juvet
       def create!(id, attributes={})
         BotRepository.create create(id, attributes)
       end
+
+      def destroy!(id)
+        BotRepository.destroy id
+      end
     end
 
     private

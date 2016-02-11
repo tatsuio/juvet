@@ -1,7 +1,7 @@
 describe Juvet::Bot do
   describe ".create" do
     subject do
-      described_class.create "T12345", bot_access_token: "xoxb-blah",
+      described_class.create "xoxb-blah", team_id: "Blah",
         name: "blah"
     end
 
@@ -10,18 +10,18 @@ describe Juvet::Bot do
     end
 
     it "assigns the id" do
-      expect(subject.id).to eq "T12345"
+      expect(subject.id).to eq "xoxb-blah"
     end
 
     it "defines getters for the attributes" do
-      expect(subject.bot_access_token).to eq "xoxb-blah"
+      expect(subject.team_id).to eq "Blah"
       expect(subject.name).to eq "blah"
     end
 
     it "defines setters for the attributes" do
-      subject.bot_access_token = "xoxb-bleh"
+      subject.name = "Thor!"
 
-      expect(subject.bot_access_token).to eq "xoxb-bleh"
+      expect(subject.name).to eq "Thor!"
     end
   end
 
@@ -30,5 +30,20 @@ describe Juvet::Bot do
       expect(Juvet::BotRepository).to receive(:create).with (Juvet::Bot)
       described_class.create! "blah", name: "blah"
     end
+  end
+
+  describe ".destroy!" do
+    let!(:bot) { described_class.create! "xoxb-blah", team_id: "Blah" }
+
+    it "removes the instance from the repository" do
+      expect(Juvet::BotRepository).to receive(:destroy).with ("xoxb-blah")
+      described_class.destroy! bot.id
+    end
+  end
+
+  describe ".find" do
+  end
+
+  describe "#update" do
   end
 end

@@ -1,8 +1,15 @@
+PATH
+  remote: .
+  specs:
+    juvet (0.0.1)
+      redis
+
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    redis (3.2.1)
+    rake (10.5.0)
+    redis (3.2.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -21,8 +28,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  redis
+  juvet!
+  rake
   rspec
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

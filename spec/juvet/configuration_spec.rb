@@ -11,7 +11,21 @@ describe Juvet::Configuration do
   end
 
   describe "#load!" do
-    xit "builds the mapping"
-    xit "builds the adapter"
+    subject { described_class.new }
+
+    before(:each) do
+      subject.adapter = { type: :null }
+      subject.mapping do; end
+    end
+
+    it "builds the mapping" do
+      expect(subject.mapping).to receive(:build).and_call_original
+      subject.load!
+    end
+
+    it "builds the adapter" do
+      expect(subject.adapter).to receive(:build).with(Juvet::Mapper)
+      subject.load!
+    end
   end
 end

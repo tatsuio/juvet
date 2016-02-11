@@ -14,6 +14,7 @@ module Juvet
     end
 
     def load!
+      adapter.build mapping.build
     end
   end
 end

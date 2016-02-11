@@ -15,6 +15,10 @@ module Juvet
         update_attributes entity
       end
 
+      def destroy(id)
+        redis.del collection_key(id)
+      end
+
       def find(id)
         attributes = redis.get(collection_key(id))
         return nil if attributes.nil?

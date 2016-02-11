@@ -30,6 +30,15 @@ describe Juvet::Adapters::RedisAdapter do
     end
   end
 
+  describe "#destroy" do
+    it "removes the entity from the redis store" do
+      id = subject.create(entity).id
+      subject.destroy id
+
+      expect(@redis.get("entities:123")).to be_nil
+    end
+  end
+
   describe "#find" do
     it "finds the entity based on the id from the redis store" do
       subject.create entity

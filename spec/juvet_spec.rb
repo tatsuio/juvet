@@ -16,5 +16,23 @@ describe Juvet do
       expect(described_class.configuration).to receive(:load!)
       described_class.configure
     end
+
+    it "sets up the adapter" do
+      described_class.configure do
+        adapter type: :null, blah: "blah"
+      end
+      expect(described_class.configuration.adapter).to be_instance_of Juvet::Configuration::Adapter
+      expect(described_class.configuration.adapter.type).to eq :null
+      expect(described_class.configuration.adapter.options).to eq({ blah: "blah" })
+      expect(described_class.configuration.adapter.class_name).to eq "NullAdapter"
+    end
+
+    it "sets up the mapping" do
+      described_class.configure do
+        mapping do
+        end
+      end
+      expect(described_class.configuration.mapping).to be_instance_of Juvet::Configuration::Mapping
+    end
   end
 end

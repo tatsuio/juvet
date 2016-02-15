@@ -12,8 +12,8 @@ module Juvet
     @configuration ||= Juvet::Configuration.new
   end
 
-  def self.configure
-    yield configuration if block_given?
+  def self.configure(&block)
+    configuration.instance_eval(&block) if block_given?
     configuration.load!
   end
 end

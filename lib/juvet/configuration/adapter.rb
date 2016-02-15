@@ -15,7 +15,11 @@ module Juvet
 
       def build(mapper)
         load_adapter
-        instantiate_adapter mapper
+        adapter = instantiate_adapter mapper
+        mapper.collections.each_pair do |name, collection|
+          collection.repository.adapter = adapter
+        end
+        adapter
       end
 
       private

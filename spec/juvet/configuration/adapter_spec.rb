@@ -28,7 +28,9 @@ describe Juvet::Configuration::Adapter do
   end
 
   describe "#build" do
-    let(:mapper) { double(:mapper, collection_for_repository: nil) }
+    let(:collection) { double(:collection, repository: repository) }
+    let(:repository) { double(:repository, "adapter=" => nil) }
+    let(:mapper) { double(:mapper, collection_for_repository: collection, collections: { blah: collection }) }
     subject { described_class.new type: :null }
 
     it "creates an instance of the adapter" do
@@ -41,6 +43,11 @@ describe Juvet::Configuration::Adapter do
       subject = described_class.new type: :blah
 
       expect { subject.build(mapper) }.to raise_error LoadError
+    end
+
+    it "sets the adapter for all the repositories in the mapper" do
+      expect(repository).to receive(:adapter=).with(Juvet::Adapters::NullAdapter)
+      subject.build(mapper)
     end
   end
 end

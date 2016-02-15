@@ -3,9 +3,7 @@ require_relative "configuration/mapping"
 
 module Juvet
   class Configuration
-    attr_reader :adapter
-
-    def adapter=(options)
+    def adapter(options=nil)
       @adapter ||= Juvet::Configuration::Adapter.new(options)
     end
 

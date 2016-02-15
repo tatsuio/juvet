@@ -2,7 +2,6 @@ describe Juvet::Configuration do
   subject { described_class.new }
 
   it "has a default repository adapter" do
-    subject.adapter = nil
     expect(subject.adapter).to be_instance_of Juvet::Configuration::Adapter
   end
 
@@ -12,11 +11,6 @@ describe Juvet::Configuration do
 
   describe "#load!" do
     subject { described_class.new }
-
-    before(:each) do
-      subject.adapter = { type: :null }
-      subject.mapping do; end
-    end
 
     it "builds the mapping" do
       expect(subject.mapping).to receive(:build).and_call_original

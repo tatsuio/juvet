@@ -20,6 +20,13 @@ describe Juvet::Configuration::Adapter do
     end
   end
 
+  describe "default options" do
+    it "has a null adapter type" do
+      expect(described_class.new.type).to eq :null
+      expect(described_class.new.class_name).to eq "NullAdapter"
+    end
+  end
+
   describe "#build" do
     let(:mapper) { double(:mapper, collection_for_repository: nil) }
     subject { described_class.new type: :null }

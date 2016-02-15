@@ -6,7 +6,7 @@ module Juvet
       attr_reader :type
 
       def initialize(options={})
-        opts = (options || {}).dup
+        opts = default_options.merge((options || {}))
 
         @type = opts.delete :type
         @options = opts
@@ -19,6 +19,10 @@ module Juvet
       end
 
       private
+
+      def default_options
+        { type: :null }.freeze
+      end
 
       def load_adapter
         require "juvet/adapters/#{type}_adapter"

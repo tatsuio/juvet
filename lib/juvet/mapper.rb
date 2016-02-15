@@ -15,7 +15,7 @@ module Juvet
     end
 
     def collection_for_repository(klass)
-      collections.values.find { |collection| collection.repository == klass }
+      collections.values.find { |collection| collection.repository.klass == klass }
     end
   end
 end

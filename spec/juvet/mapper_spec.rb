@@ -35,7 +35,7 @@ describe Juvet::Mapper do
       result = subject.collection_for_repository WidgetRepository
 
       expect(result.name).to eq :widgets
-      expect(result.repository).to eq WidgetRepository
+      expect(result.repository.klass).to eq WidgetRepository
     end
 
     it "returns nil if the repository is not found" do

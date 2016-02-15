@@ -9,11 +9,12 @@ describe Juvet::Mapper::Collection do
     it "executes the block if one is provided" do
       subject = described_class.new(:widgets) do
         entity Object
-        repository Object
+        repository Object, adapter: :blah
       end
 
       expect(subject.entity).to eq Object
-      expect(subject.repository).to eq Object
+      expect(subject.repository.klass).to eq Object
+      expect(subject.repository.adapter).to eq :blah
     end
   end
 end

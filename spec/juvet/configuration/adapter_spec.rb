@@ -35,7 +35,12 @@ describe Juvet::Configuration::Adapter do
       expect { Juvet::Adapters::RedisAdapter }.to_not raise_error
     end
 
-    it "returns a load error if the adapter type cannot be loaded" do
+    it "returns the class name for the adapter" do
+      klass = subject.build
+      expect(klass).to eq Juvet::Adapters::RedisAdapter
+    end
+
+    it "raises a load error if the adapter type cannot be loaded" do
       subject = described_class.new :blah
 
       expect { subject.build }.to raise_error LoadError

@@ -15,6 +15,7 @@ module Juvet
 
       def build
         load_adapter
+        Juvet::Adapters.const_get(class_name)
       end
 
       private

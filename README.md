@@ -16,10 +16,10 @@ In order to configure Juvet, you will want to specify the repository it will be 
 
 ```
 Juvet.configure do
-  adapter type: :redis, url: ENV["REDIS_URL"]
+  adapter :redis, url: ENV["REDIS_URL"]
   mapping do
     collection :bots do
-      repository Juvet::BotRepository
+      repository Juvet::BotRepository, adapter: :redis
       entity Juvet::Bot
     end
   end

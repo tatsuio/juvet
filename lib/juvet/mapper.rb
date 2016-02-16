@@ -14,10 +14,6 @@ module Juvet
       collections[name] = Juvet::Mapper::Collection.new name, &block
     end
 
-    def collection_for_repository(klass)
-      collections.values.find { |collection| collection.repository.klass == klass }
-    end
-
     def build(adapter)
       collections.each_pair do |name, collection|
         if collection.repository && collection.repository.adapter == adapter.type

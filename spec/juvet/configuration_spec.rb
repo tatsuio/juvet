@@ -2,7 +2,7 @@ describe Juvet::Configuration do
   subject { described_class.new }
 
   it "has a default repository adapter" do
-    expect(subject.adapter({})).to be_instance_of Juvet::Configuration::Adapter
+    expect(subject.adapter(:null)).to be_instance_of Juvet::Configuration::Adapter
   end
 
   it "has a default mapping" do
@@ -13,13 +13,8 @@ describe Juvet::Configuration do
     subject { described_class.new }
 
     it "builds the mapping" do
-      subject.adapter({})
-      expect(subject.mapping).to receive(:build).and_call_original
-      subject.load!
-    end
-
-    it "builds the adapter" do
-      expect(subject.adapter({})).to receive(:build).with(Juvet::Mapper)
+      subject.adapter :null
+      expect(subject.mapping).to receive(:build).with(subject.adapter)
       subject.load!
     end
   end

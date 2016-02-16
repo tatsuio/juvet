@@ -19,9 +19,10 @@ describe Juvet do
 
     it "sets up the adapter" do
       described_class.configure do
-        adapter type: :null, blah: "blah"
+        adapter :null, blah: "blah"
       end
-      expect(described_class.configuration.adapter).to be_instance_of Juvet::Configuration::Adapter
+      expect(described_class.configuration.adapter).to \
+        be_instance_of Juvet::Configuration::Adapter
       expect(described_class.configuration.adapter.type).to eq :null
       expect(described_class.configuration.adapter.options).to eq({ blah: "blah" })
       expect(described_class.configuration.adapter.class_name).to eq "NullAdapter"
@@ -32,7 +33,8 @@ describe Juvet do
         mapping do
         end
       end
-      expect(described_class.configuration.mapping).to be_instance_of Juvet::Configuration::Mapping
+      expect(described_class.configuration.mapping).to \
+        be_instance_of Juvet::Configuration::Mapping
     end
   end
 end

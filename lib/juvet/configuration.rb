@@ -3,9 +3,9 @@ require_relative "configuration/mapping"
 
 module Juvet
   class Configuration
-    def adapter(options=nil)
-      return @adapter if options.nil?
-      @adapter ||= Juvet::Configuration::Adapter.new(options)
+    def adapter(type=nil, options=nil)
+      return @adapter if type.nil?
+      @adapter ||= Juvet::Configuration::Adapter.new(type, options)
     end
 
     def mapping(&block)
@@ -13,7 +13,7 @@ module Juvet
     end
 
     def load!
-      adapter.build mapping.build
+      mapping.build adapter
     end
   end
 end

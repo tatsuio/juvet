@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    juvet (0.0.3)
+    juvet (0.0.4)
       redis
 
 GEM

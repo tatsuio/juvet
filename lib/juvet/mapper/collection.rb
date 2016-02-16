@@ -1,3 +1,5 @@
+require_relative "mapped_repository"
+
 module Juvet
   class Mapper
     class Collection
@@ -16,9 +18,9 @@ module Juvet
         end
       end
 
-      def repository(klass=nil)
+      def repository(klass=nil, options=nil)
         if klass
-          @repository = klass
+          @repository = MappedRepository.new klass, options
         else
           @repository
         end

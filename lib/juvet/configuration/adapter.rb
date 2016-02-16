@@ -5,34 +5,25 @@ module Juvet
       attr_reader :options
       attr_reader :type
 
-      def initialize(options={})
-        opts = default_options.merge((options || {}))
+      def initialize(type=nil, options={})
+        opts = (options || {}).dup
 
-        @type = opts.delete :type
+        @type = type || :null
         @options = opts
-        @class_name = Juvet::String.new("#{type}_adapter").classify
+        @class_name = Juvet::String.new("#{self.type}_adapter").classify
       end
 
-      def build(mapper)
+      def build
         load_adapter
-        instantiate_adapter mapper
+        Juvet::Adapters.const_get(class_name)
       end
 
       private
-
-      def default_options
-        { type: :null }.freeze
-      end
 
       def load_adapter
         require "juvet/adapters/#{type}_adapter"
       rescue LoadError => e
         raise LoadError.new("Cannot find Juvet adapter '#{type}' (#{e.message})")
-      end
-
-      def instantiate_adapter(mapper)
-        klass = Juvet::Adapters.const_get(class_name)
-        klass.new(mapper.collection_for_repository(klass), options)
       end
     end
   end

@@ -10,19 +10,10 @@ describe Juvet::Mapper do
     end
   end
 
-  describe "#collection" do
-    subject { described_class.new }
-
-    it "adds a collection with the block" do
-      subject.collection(:widgets) do; end
-
-      expect(subject.collections[:widgets]).to \
-        be_instance_of Juvet::Mapper::Collection
+  describe "#build" do
+    class WidgetRepository
+      include Juvet::Repository
     end
-  end
-
-  describe "#collection_for_repository" do
-    class WidgetRepository; end
     let(:subject) do
       described_class.new do
         collection :widgets do
@@ -31,17 +22,20 @@ describe Juvet::Mapper do
       end
     end
 
-    it "returns the collection for the first one that specifies the repository" do
-      result = subject.collection_for_repository WidgetRepository
-
-      expect(result.name).to eq :widgets
-      expect(result.repository).to eq WidgetRepository
+    it "sets the adapter on the repositories" do
+      expect(WidgetRepository).to receive(:adapter=).with(Juvet::Adapters::NullAdapter)
+      subject.build Juvet::Configuration::Adapter.new :null
     end
+  end
 
-    it "returns nil if the repository is not found" do
-      result = subject.collection_for_repository Object
+  describe "#collection" do
+    subject { described_class.new }
 
-      expect(result).to be_nil
+    it "adds a collection with the block" do
+      subject.collection(:widgets) do; end
+
+      expect(subject.collections[:widgets]).to \
+        be_instance_of Juvet::Mapper::Collection
     end
   end
 end

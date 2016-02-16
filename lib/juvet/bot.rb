@@ -6,7 +6,7 @@ module Juvet
 
     class << self
       def create(id, attributes={})
-        new id, attributes
+        new attributes.merge(id: id)
       end
 
       def create!(id, attributes={})
@@ -24,13 +24,6 @@ module Juvet
 
     def update!(attributes={})
       BotRepository.update self
-    end
-
-    private
-
-    def initialize(id, attributes={})
-      @id = id
-      super attributes
     end
   end
 end

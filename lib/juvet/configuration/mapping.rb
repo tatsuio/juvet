@@ -7,8 +7,10 @@ module Juvet
         @block = block
       end
 
-      def build
-        Juvet::Mapper.new &@block
+      def build(adapter)
+        mapper = Juvet::Mapper.new &@block
+        mapper.build(adapter)
+        mapper
       end
     end
   end

@@ -1,10 +1,5 @@
 module Juvet
   module Attributable
-    def initialize(attributes={})
-      initialize! attributes
-      attribute! attributes
-    end
-
     def initialize!(attributes)
       attributes.each { |name, value| set_variable! name, value }
     end
@@ -25,6 +20,11 @@ module Juvet
     end
 
     private
+
+    def initialize(attributes={})
+      initialize! attributes
+      attribute! attributes
+    end
 
     def create_method(name, &block)
       self.class.send(:define_method, name, &block)

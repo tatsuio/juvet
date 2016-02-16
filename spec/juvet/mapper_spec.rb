@@ -10,6 +10,24 @@ describe Juvet::Mapper do
     end
   end
 
+  describe "#build" do
+    class WidgetRepository
+      include Juvet::Repository
+    end
+    let(:subject) do
+      described_class.new do
+        collection :widgets do
+          repository WidgetRepository
+        end
+      end
+    end
+
+    it "sets the adapter on the repositories" do
+      expect(WidgetRepository).to receive(:adapter=).with(Juvet::Adapters::NullAdapter)
+      subject.build Juvet::Configuration::Adapter.new :null
+    end
+  end
+
   describe "#collection" do
     subject { described_class.new }
 

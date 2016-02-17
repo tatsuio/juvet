@@ -5,6 +5,10 @@ module Juvet
     attr_reader :id
 
     class << self
+      def all!
+        BotRepository.all
+      end
+
       def create(id, attributes={})
         new attributes.merge(id: id)
       end

@@ -25,6 +25,13 @@ describe Juvet::Bot do
     end
   end
 
+  describe ".all!" do
+    it "returns all the bots from the repository" do
+      expect(Juvet::BotRepository).to receive(:all)
+      described_class.all!
+    end
+  end
+
   describe ".create!" do
     it "stores the created instance in the repository" do
       expect(Juvet::BotRepository).to receive(:create).with Juvet::Bot

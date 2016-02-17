@@ -19,6 +19,10 @@ module Juvet
         @adapter = adapter
       end
 
+      def all
+        adapter.all
+      end
+
       def create(entity)
         adapter.create entity
       end

@@ -4,6 +4,10 @@ module Juvet
       def initialize(collection=nil, options={})
       end
 
+      def all
+        []
+      end
+
       def create(entity)
         entity
       end

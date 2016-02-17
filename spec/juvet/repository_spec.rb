@@ -7,6 +7,13 @@ describe Juvet::Repository do
     expect(Repository.adapter).to be_instance_of Juvet::Adapters::NullAdapter
   end
 
+  describe ".all" do
+    it "passes the retrieval to the adapter" do
+      expect(Repository.adapter).to receive(:all)
+      Repository.all
+    end
+  end
+
   describe ".create" do
     it "passes creation to the adapter" do
       object = Object.new

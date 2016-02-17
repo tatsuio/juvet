@@ -14,12 +14,23 @@ describe Juvet::Adapters::RedisAdapter do
   end
 
   let(:collection) { double(:collection, name: :entities, entity: Entity) }
-  let(:entity) { Entity.new id: 123 }
+  let(:entity) { Entity.new id: "123" }
   let(:url) { "redis://localhost:6379" }
   subject { described_class.new collection, url: url, db: 15 }
 
   before(:all) { @redis = Redis.new db: 15 }
   after(:all) { @redis.flushdb }
+
+  describe "#all" do
+    it "returns all the entities for a given collection" do
+      entity1 = subject.create(entity)
+      entity2 = subject.create(Entity.new(id: "1234"))
+
+      result = subject.all
+
+      expect(result.map(&:id)).to eq ["1234", "123"]
+    end
+  end
 
   describe "#create" do
     it "stores the entity in the redis store" do
@@ -48,7 +59,7 @@ describe Juvet::Adapters::RedisAdapter do
     end
 
     it "returns nil if the entity can't be found" do
-      result = subject.find 789
+      result = subject.find "789"
 
       expect(result).to be_nil
     end
@@ -84,7 +95,7 @@ describe Juvet::Adapters::RedisAdapter do
     end
 
     it "throws an exception if the entity is not already stored" do
-      entity = Entity.new id: 456
+      entity = Entity.new id: "456"
 
       expect { subject.update entity }.to raise_error Juvet::EntityNotFoundError
     end

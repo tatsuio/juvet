@@ -11,6 +11,12 @@ module Juvet
         @redis = Redis.new options
       end
 
+      def all
+        redis.keys("#{collection_prefix}:*").map do |key|
+          find_by_key(key)
+        end
+      end
+
       def create(entity)
         update_attributes entity
       end
@@ -20,9 +26,7 @@ module Juvet
       end
 
       def find(id)
-        attributes = redis.get(collection_key(id))
-        return nil if attributes.nil?
-        collection.entity.new ({ id: id }).merge(JSON.load(attributes))
+        find_by_key collection_key(id)
       end
 
       def persist(entity)
@@ -37,7 +41,21 @@ module Juvet
       private
 
       def collection_key(id)
-        "#{Juvet::String.new(collection.name).underscore}:#{id}"
+        "#{collection_prefix}:#{id}"
+      end
+
+      def collection_prefix
+        Juvet::String.new(collection.name).underscore
+      end
+
+      def find_by_key(key)
+        attributes = redis.get key
+        return nil if attributes.nil?
+        collection.entity.new ({ id: id_from_key(key) }).merge(JSON.load(attributes))
+      end
+
+      def id_from_key(key)
+        key.gsub("#{collection_prefix}:", "")
       end
 
       def key(entity)

@@ -6,7 +6,8 @@ module Juvet
 
     class << self
       def create(id, attributes={})
-        new id, attributes
+        bot = new id, attributes
+        BotRepository.persist bot
       end
     end
 

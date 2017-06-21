@@ -1,8 +1,9 @@
 describe Juvet::Bot do
   describe ".create" do
+    let(:id) { "T12345" }
+
     subject do
-      described_class.create "T12345", bot_access_token: "xoxb-blah",
-        name: "blah"
+      described_class.create id, bot_access_token: "xoxb-blah", name: "blah"
     end
 
     it "creates an instance of the class" do
@@ -10,7 +11,7 @@ describe Juvet::Bot do
     end
 
     it "assigns the id" do
-      expect(subject.id).to eq "T12345"
+      expect(subject.id).to eq id
     end
 
     it "defines getters for the attributes" do
@@ -22,6 +23,12 @@ describe Juvet::Bot do
       subject.bot_access_token = "xoxb-bleh"
 
       expect(subject.bot_access_token).to eq "xoxb-bleh"
+    end
+
+    it "saves the data to the redis store" do
+      subject
+
+      expect($redis.get(id)).to_not be_nil
     end
   end
 end
